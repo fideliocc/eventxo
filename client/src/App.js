@@ -4,8 +4,9 @@ import indexRoutes from './routes/index.jsx';
 import { Route, Switch } from 'react-router-dom';
 import { BrowserRouter } from 'react-router-dom'
 
-import { Provider } from "react-redux";
-import store from "./store";
+import { Provider } from "react-redux"
+import { PersistGate } from 'redux-persist/integration/react'
+import { store, persistor } from "./store";
 import setAuthToken from "./utils/setAuthToken";
 import { setCurrentUser, logoutUser } from "./actions/authActions";
 
@@ -36,6 +37,7 @@ class App extends Component {
   render() {
     return (
       <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
         <BrowserRouter>
           <Switch>
             {indexRoutes.map((prop, key) => {
@@ -47,6 +49,7 @@ class App extends Component {
             })}
           </Switch>
        </BrowserRouter>
+       </PersistGate>
       </Provider>
     )
   }
